@@ -45,7 +45,7 @@ branch.
 institution-code: extactly 4 upper-case ascii letters.
 country-code: a 2 letter ISO-3166 code.
 location-code: exactly 2 letters or digits.
-branch: nil or exactly 3 letters or digits."
+branch: nil or emtpy or exactly 3 letters or digits."
   ([institution-code country-code location-code]
      (bic institution-code country-code location-code nil))
   ([institution-code country-code location-code branch-code]
@@ -53,6 +53,7 @@ branch: nil or exactly 3 letters or digits."
             (re-matches #"[A-Z]{2}" country-code)
             (re-matches #"[A-Z0-9]{2}" location-code)
             (or (nil? branch-code)
+                (empty? branch-code)
                 (re-matches #"[A-Z0-9]{3}" branch-code))]
       :post [(bic? %)]}
      (str institution-code country-code location-code (or branch-code ""))))

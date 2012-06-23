@@ -39,4 +39,5 @@
 (deftest construction
   (is (= "DEUTDEFF007" (bic "DEUT" "DE" "FF" "007")))
   (is (= "DEUTDEFF" (bic "DEUT" "DE" "FF" nil)))
+  (is (= "DEUTDEFF" (bic "DEUT" "DE" "FF" "")))
   (is (= "DEUTDEFF" (bic "DEUT" "DE" "FF"))))
