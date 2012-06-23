@@ -4,7 +4,7 @@
 
 (deftest syntactic-validity
   (testing "syntactically valid BICs"
-    (are [s] (bic? s)
+    (are [s] (identical? s (bic? s))
          "AAAAAAAA"
          "AAAAAAAAAAA"
          "AAAAAA11"
@@ -13,7 +13,6 @@
          "DSBACNBXSHA"))
   (testing "syntactically invalid BICs"
     (are [s] (not (bic? s))
-         nil
          ""
          "A"
          "AA"
@@ -24,7 +23,10 @@
          "AAAAAAA"
          "AAAAAAAAA"
          "AAAAAAAAAA"
-         "clearly not a bic")))
+         "clearly not a bic"))
+  (testing "non-strings"
+    (are [s] (not (bic? s))
+         nil 1 1.1 \x true false)))
 
 (deftest parsing
   (are [f s] (= s (f "DEUTDEFF"))

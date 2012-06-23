@@ -1,12 +1,13 @@
 (ns big-ivan.bic)
 
+(def ^:private bic-re #"[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?")
+
 (defn bic?
-  "Determine if the string s is syntactically a valid BIC.
-A BIC begins with 6 uppercase ascii letters, followed by 2 or 5
-uppercase letters or digits. (bic? nil) is legal to call and returns
-nil."
+  "Determine if s is syntactically a valid BIC, returning s or something false.
+A BIC is a string that begins with 6 uppercase ascii letters, followed
+by 2 or 5 uppercase letters or digits."
   [s]
-  (and s (re-matches #"[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?" s)))
+  (and  (string? s) (re-matches bic-re s) s))
 
 (defn institution-code
   "Extract the four letter institution code form bic. bic must be valid."
