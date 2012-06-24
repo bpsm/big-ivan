@@ -34,11 +34,17 @@
          "XX9"
          "XX9X"
          "XX99"
-         "NO0086011117947"              ; bad checksum
-         ;;         "NO698601111794"               ; too short
-         ;;         "NO37860111179470"             ; too long
-         ;;         "NO95X6011117947"              ; malformed bban
-         "XX00^&^@(#*&)@)")))
+         "XX00^&^@(#*&)@)")
+    (testing "unsupported country code"
+      (not (iban? "XX90")))
+    (testing "bad checksum"
+      (not (iban? "NO0086011117947")))
+    (testing "too short"
+      (not (iban? "NO698601111794")))
+    (testing "too long"
+      (not (iban? "NO37860111179470")))
+    (testing "malformed BBAN"
+      (not (iban? "NO95X6011117947")))))
 
 (deftest test-formatting
   (testing "remove-spaces does what it says"
