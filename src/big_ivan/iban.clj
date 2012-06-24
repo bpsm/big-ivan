@@ -130,14 +130,21 @@ Input is a string containing a single letter. Result is a sting of two digits."
             str)))))
 
 (defn expand-letters-to-digits
+  "Expand each ASCII letter in s into two digits as per letter->digits.
+s must be a string containing only letters and digits."
   [s]
   {:pre [(string? s) (re-matches expandable-re s)]
-   :post [#_(re-matches only-digits-re s)]}
+   :post [(re-matches only-digits-re %)]}
   (string/replace s #"[A-Za-z]" letter->digits))
 
 (defn check?
   [s]
-  (-> s (srotl 4) expand-letters-to-digits bigint (mod 97) (= 1)))
+  (-> s
+      (srotl 4)
+      expand-letters-to-digits
+      bigint
+      (mod 97)
+      (= 1)))
 
 (defn set-check
   [^String s]
