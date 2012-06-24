@@ -118,6 +118,8 @@ expression Pattern at compile time."
     (str (.substring s d) (.substring s 0 d))))
 
 (def letter->digits
+  "Translate the letters A-Z, a-z to integers 10-36 case insensitively.
+Input is a string containing a single letter. Result is a sting of two digits."
   (let [a (int \a)
         A (int \A)]
     (fn [m]
