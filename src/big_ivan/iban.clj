@@ -6,6 +6,14 @@
 (def ^:private only-digits-re #"[0-9]*")
 
 (def bban-format-map
+  "Map from two letter country code to BBAN format.
+
+Each IBAN begins with a two-letter ISO-3166 country code. The two letter country
+code determines the format of the BBAN, the portion of the IBAN that follows
+after the country code and check digits.
+
+The format notation is described by the IBAN standard. The specifics below
+are from the _IBAN Registry_ Version 36 (June 2012)."
   {"AL"  "8!n16!c"
    "AD"  "4!n4!n12!c"
    "AT"  "5!n11!n"
