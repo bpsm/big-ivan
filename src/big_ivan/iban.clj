@@ -81,29 +81,31 @@ are from the _IBAN Registry_ Version 36 (June 2012)."
    "VG"  "4!a16!n"
    })
 
-(defn bban-format->regex
-  [s]
-  {:pre [(re-matches #"(?:([0-9]+)([!])?([cnae]))+" s)]}
-  (string/replace s #"([0-9]+)([!])?([cnae])"
-                  (fn [[_ length fixed char-class]]
-                    (format "%s{%s%s}"
-                            (case char-class
-                              "c" "[A-Za-z0-9]"
-                              "n" "[0-9]"
-                              "a" "[A-Z]"
-                              "e" " ")
-                         (if fixed "" "0,")
-                         length))))
+(def bban-fmt->re-str
+  "Translate a BBAN format specification as used by the standard into
+a String containing an equivalent Java compatible regular expression."
+  (let [character-class {"c" "[A-Za-z0-9]", "n" "[0-9]", "a" "[A-Z]", "e" " "}]
+    (fn [bban-fmt]
+      (string/replace
+       bban-fmt #"([0-9]+)([!])?([cnae])"
+       (fn [[_ length fixed? c]]
+         (str (character-class c) "{" (if fixed? "" "0,") length "}"))))))
 
-(defn iban-regex*
-  [iban-formats]
-  (re-pattern
-   (apply str
-          (interpose
-           "|" (for [[cc fmt] iban-formats]
-                 (str cc "[0-9]{2}" (bban-format->regex fmt)))))))
+(def iban-regex*
+  "Create a single regular expression Pattern which will recognize any of the
+IBAN variants described by the iban-formats map passed as parameter."
+  (fn [iban-formats]
+      (->> (for [[country-code bban-fmt] (sort iban-formats)]
+             (str country-code "[0-9]{2}" (bban-fmt->re-str bban-fmt)))
+           (interpose "|")
+           (apply str)
+           re-pattern)))
 
-(defmacro iban-regex [] (iban-regex* bban-format-map))
+(defmacro iban-regex
+  "Use this macro to perform the conversion from IBAN notation to regular
+expression Pattern at compile time."
+  []
+  (iban-regex* bban-format-map))
 
 (defn srotl
   "Rotate the string s to the left by d positions.
