@@ -2,24 +2,6 @@
   (:use clojure.test
         big-ivan.iban))
 
-(deftest test-srotl
-  (are [s d x] (= x (#'big-ivan.iban/srotl s d))
-       "abcdef"  0 "abcdef"
-       "abcdef"  2 "cdefab"
-       "abcdef" -2 "efabcd"
-       "abcdef" 5 "fabcde"
-       "abcdef" 6 "abcdef"
-       "abcdef" -6 "abcdef"
-       "abcdef" -5 "bcdefa"
-       ))
-
-(deftest test-letter->digits
-  (let [digits-for-a-to-z (map str (range 10 36))]
-    (are [s] (= digits-for-a-to-z
-                (map (comp #'big-ivan.iban/letter->digits str) s))
-         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-         "abcdefghijklmnopqrstuvwxyz")))
-
 (deftest test-iban?
   (testing "nil is not an iban"
     (is (not (iban? nil))))
