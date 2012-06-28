@@ -3,7 +3,7 @@
         big-ivan.iban))
 
 (deftest test-srotl
-  (are [s d x] (= x (srotl s d))
+  (are [s d x] (= x (#'big-ivan.iban/srotl s d))
        "abcdef"  0 "abcdef"
        "abcdef"  2 "cdefab"
        "abcdef" -2 "efabcd"
@@ -15,7 +15,8 @@
 
 (deftest test-letter->digits
   (let [digits-for-a-to-z (map str (range 10 36))]
-    (are [s] (= digits-for-a-to-z (map (comp letter->digits str) s))
+    (are [s] (= digits-for-a-to-z
+                (map (comp #'big-ivan.iban/letter->digits str) s))
          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
          "abcdefghijklmnopqrstuvwxyz")))
 

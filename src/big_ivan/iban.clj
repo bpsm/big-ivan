@@ -5,7 +5,7 @@
 (def ^:private expandable-re #"[A-Za-z0-9]*")
 (def ^:private only-digits-re #"[0-9]*")
 
-(def bban-format-map
+(def ^:private bban-format-map
   "Map from two letter country code to BBAN format.
 
 Each IBAN begins with a two-letter ISO-3166 country code. The two letter country
@@ -13,7 +13,10 @@ code determines the format of the BBAN, the portion of the IBAN that follows
 after the country code and check digits.
 
 The format notation is described by the IBAN standard. The specifics below
-are from the _IBAN Registry_ Version 36 (June 2012)."
+are from the _IBAN Registry_ Version 36 (June 2012).
+
+The syntax used to express the BBAN format is documented in the
+ISO-13616 IBAN standard."
   {"AL"  "8!n16!c"
    "AD"  "4!n4!n12!c"
    "AT"  "5!n11!n"
@@ -81,7 +84,7 @@ are from the _IBAN Registry_ Version 36 (June 2012)."
    "VG"  "4!a16!n"
    })
 
-(def bban-fmt->re-str
+(def ^:private bban-fmt->re-str
   "Translate a BBAN format specification as used by the standard into
 a String containing an equivalent Java compatible regular expression."
   (let [character-class {"c" "[A-Za-z0-9]", "n" "[0-9]", "a" "[A-Z]", "e" " "}]
@@ -91,7 +94,7 @@ a String containing an equivalent Java compatible regular expression."
        (fn [[_ length fixed? c]]
          (str (character-class c) "{" (if fixed? "" "0,") length "}"))))))
 
-(def iban-regex*
+(def ^:private iban-regex*
   "Create a single regular expression Pattern which will recognize any of the
 IBAN variants described by the iban-formats map passed as parameter."
   (fn [iban-formats]
@@ -101,13 +104,13 @@ IBAN variants described by the iban-formats map passed as parameter."
            (apply str)
            re-pattern)))
 
-(defmacro iban-regex
+(defmacro ^:private iban-regex
   "Use this macro to perform the conversion from IBAN notation to regular
 expression Pattern at compile time."
   []
   (iban-regex* bban-format-map))
 
-(defn srotl
+(defn ^:private srotl
   "Rotate the string s to the left by d positions.
   (srotl \"abcdef\" 2) => \"cdefab\"."
   [^String s d]
@@ -117,7 +120,7 @@ expression Pattern at compile time."
         d (rem (if (pos? d) d (+ n d)) n)]
     (str (.substring s d) (.substring s 0 d))))
 
-(def letter->digits
+(def ^:private letter->digits
   "Translate the letters A-Z, a-z to integers 10-36 case insensitively.
 Input is a string containing a single letter. Result is a sting of two digits."
   (let [a (int \a)
@@ -129,7 +132,7 @@ Input is a string containing a single letter. Result is a sting of two digits."
             (+ 10)
             str)))))
 
-(defn expand-letters-to-digits
+(defn ^:private expand-letters-to-digits
   "Expand each ASCII letter in s into two digits as per letter->digits.
 s must be a string containing only letters and digits."
   [s]
@@ -138,13 +141,16 @@ s must be a string containing only letters and digits."
   (string/replace s #"[A-Za-z]" letter->digits))
 
 (defn check?
+  ""
   [s]
-  (-> s
-      (srotl 4)
-      expand-letters-to-digits
-      bigint
-      (mod 97)
-      (= 1)))
+  (and (string? s)
+       (re-matches #"[A-Za-z0-9]{4,}" s)
+       (-> s
+           (srotl 4)
+           expand-letters-to-digits
+           bigint
+           (mod 97)
+           (= 1))))
 
 (defn set-check
   [^String s]
