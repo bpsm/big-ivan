@@ -107,6 +107,4 @@ parameter."
 structured known IBAN. The registry determines which IBANs are be
 supported."
   []
-  (-> bban-format-map
-      bban-formats->re-string
-      re-pattern))
+  (re-pattern (bban-formats->re-string bban-format-map)))
