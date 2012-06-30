@@ -1,3 +1,6 @@
+;;; -*- mode: clojure ; coding: utf-8 -*-
+;;; (c) 2012 Ben Smith-Mannschott -- Distributed under the Eclipse Public License
+
 (ns big-ivan.iban.registry
   (:require [clojure.string :as string]))
 

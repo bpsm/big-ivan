@@ -1,3 +1,6 @@
+;;; -*- mode: clojure ; coding: utf-8 -*-
+;;; (c) 2012 Ben Smith-Mannschott -- Distributed under the Eclipse Public License
+
 (ns big-ivan.bic)
 
 (def ^:private bic-re #"[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?")
