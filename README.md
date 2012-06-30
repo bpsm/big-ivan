@@ -1,4 +1,53 @@
-big-ivan
-========
+<!-- -*- mode: markdown ; coding: utf-8 -*- -->
 
-Teaching Clojure to validate, parse and construct BIC and IBAN values.
+# big-ivan
+
+A library for validating, parsing and constructing BIC and IBAN values.
+
+## Usage
+
+### BIC
+
+A few examples:
+
+    (require '[big-ivan.bic :as bic])
+
+    (bic/bic? "not-a-bic") => nil
+    (bic/bic? "DEUTDEFF") => "DEUTDEFF"
+
+    (def some-value "DEUTDEFF")
+    (if-let [b (bic/bic? some-value)]
+        (bic/country-code b))
+    => "DE"
+
+    (bic/bic "DEUT" "DE" "FF" "007")
+    => "DEUTDEFF007"
+
+    (bic/bic "$$$$" "DE" "FF" "007")
+    => throws AssertionError
+
+See docstrings in `big-ivan.bic` or examples in `big-ivan.bic-test`
+for more information.
+
+### IBAN
+
+A few examples:
+
+    (require '[big-ivan.iban :as iban])
+
+    (iban/iban? :not-an-iban) => nil
+    (iban/iban? "SA0380000000608010167519") => "SA0380000000608010167519"
+
+    (iban/bban "SA0380000000608010167519") => "0000000608010167519"
+
+    (iban/add-spaces "SA0380000000608010167519") 
+    => "SA03 8000 0000 6080 1016 7519"
+
+See docstrings in `big-ivan.iban` or examples in `big-ivan.iban-test`
+for more information.
+
+## License
+
+Copyright © 2012 Ben Smith-Mannschott
+
+Distributed under the Eclipse Public License, the same as Clojure.
