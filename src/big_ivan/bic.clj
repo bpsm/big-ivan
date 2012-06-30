@@ -6,11 +6,13 @@
 (def ^:private bic-re #"[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?")
 
 (defn bic?
-  "Determine if s is syntactically a valid BIC, returning s or something false.
+  "Determine if s is syntactically a valid BIC, returning s or nil.
+
 A BIC is a string that begins with 6 uppercase ascii letters, followed
 by 2 or 5 uppercase letters or digits."
   [s]
-  (and  (string? s) (re-matches bic-re s) s))
+  (when (and  (string? s) (re-matches bic-re s))
+    s))
 
 (defn institution-code
   "Extract the four letter institution code form bic. bic must be valid."
@@ -43,12 +45,18 @@ by 2 or 5 uppercase letters or digits."
 
 (defn bic
   "Construct a valid BIC given institution, country, location and an optional
-branch.
+branch. 
 
 institution-code: extactly 4 upper-case ascii letters.
 country-code: a 2 letter ISO-3166 code.
 location-code: exactly 2 letters or digits.
-branch: nil or emtpy or exactly 3 letters or digits."
+branch: nil or emtpy or exactly 3 letters or digits.
+
+The single-argument version of this function returns its argument,
+which must satisfy bic?."
+  ([s]
+     {:pre (bic? s)}
+     s)
   ([institution-code country-code location-code]
      (bic institution-code country-code location-code nil))
   ([institution-code country-code location-code branch-code]

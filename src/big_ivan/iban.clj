@@ -7,12 +7,13 @@
                            [registry :as registry])))
 
 (defn iban?
-  "Return true if s is a valid IBAN: a string in IBAN 'electronic'
-format with consistent check digits."
+  "Return s if s is a valid IBAN (a string in IBAN 'electronic'
+format with consistent check digits), otherwise reutrn nil."
   [s]
-  (and  (string? s)
-        (re-matches (registry/iban-pattern) s)
-        (check/check? s)))
+  (when (and  (string? s)
+              (re-matches (registry/iban-pattern) s)
+              (check/check? s))
+    s))
 
 (defn remove-spaces
   "Return iban with any spaces removed.
@@ -32,12 +33,15 @@ This provides the IBAN standard's 'printed' representation."
   (and (string? s) (re-matches #"[A-Z]{2}" s)))
 
 (defn iban
-  "Construct an iban from a single string or from a country code and a bban."
+  "Construct an iban from a single string or from a country code and a bban.
+
+In the singal argument case, s must satisfy iban?."
   ([s]
      {:pre [(string? s)]
-      :post [(or (nil? %) (iban? %))]}
+      :post [(iban? %)]}
      (let [s* (remove-spaces s)]
-       (when (iban? s*) s*)))
+       (assert (iban? s*))
+       s*))
   ([country-code bban]
      {:post [(iban? %)]}
      (check/set-check (str country-code "00" bban))))
