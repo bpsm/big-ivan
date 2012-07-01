@@ -7,6 +7,7 @@
             (big-ivan.iban [check :as check]
                            [registry :as registry])))
 
+
 (defn iban?
   "Return s if s is a valid IBAN (a string in IBAN 'electronic'
 format with consistent check digits), otherwise reutrn nil."
@@ -16,6 +17,7 @@ format with consistent check digits), otherwise reutrn nil."
               (check/check? s))
     s))
 
+
 (defn remove-spaces
   "Return iban with any spaces removed.
 This reverts an IBAN in 'printed' representation to the standard's
@@ -23,6 +25,7 @@ This reverts an IBAN in 'printed' representation to the standard's
 are valid IBANs with respect to iban?."
   [iban]
   (string/replace iban " " ""))
+
 
 (defn add-spaces
   "Return iban with spaces separating non-space characters into groups of four.
@@ -45,12 +48,14 @@ In the singal argument case, s must satisfy iban?."
      {:post [(iban? %)]}
      (check/set-check (str country-code "00" bban))))
 
+
 (defn country-code
   "Return the country code of iban. iban must be valid."
   [^String iban]
   {:pre [(iban? iban)]
    :post [(re-matches #"[A-Z]{2}" %)]}
   (.substring iban 0 2))
+
 
 (defn bban
   "Return the BBAN portion of iban. iban must be valid."

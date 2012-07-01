@@ -15,12 +15,14 @@ by 2 or 5 uppercase letters or digits."
   (when (and  (string? s) (re-matches bic-re s))
     s))
 
+
 (defn institution-code
   "Extract the four letter institution code form bic. bic must be valid."
   [^String bic]
   {:pre [(bic? bic)]
    :post [(re-matches #"[A-Z]{4}" %)]}
   (.substring bic 0 4))
+
 
 (defn country-code
   "Extract the two-letter ISO-3166 country code from bic. bic must be valid."
@@ -29,12 +31,14 @@ by 2 or 5 uppercase letters or digits."
    :post [(re-matches #"[A-Z]{2}" %)]}
   (.substring bic 4 6))
 
+
 (defn location-code
   "Extract the two-character location code from bic. bic must be valid."
   [^String bic]
   {:pre [(bic? bic)]
    :post [(re-matches #"[0-9A-Z]{2}" %)]}
   (.substring bic 6 8))
+
 
 (defn branch-code
   "Extract the optional three-character branch code from bic. bic must be valid."
@@ -43,6 +47,7 @@ by 2 or 5 uppercase letters or digits."
    :post [(or (nil? %) (re-matches #"[0-9A-Z]{3}" %))]}
   (when (= 11 (count bic))
     (.substring bic 8 11)))
+
 
 (defn bic
   "Construct a valid BIC given institution, country, location and an optional
