@@ -1,4 +1,4 @@
-(defproject org.clojars.bpsm/big-ivan "0.1.0-SNAPSHOT"
+(defproject org.clojars.bpsm/big-ivan "0.1.0"
   :description "A validating parser for BIC and IBAN"
   :url "http://github.com/bpsm/big-ivan"
   :license {:name "Eclipse Public License"
