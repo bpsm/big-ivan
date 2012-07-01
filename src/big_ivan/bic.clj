@@ -61,7 +61,7 @@ branch: nil or emtpy or exactly 3 letters or digits.
 The single-argument version of this function returns its argument,
 which must satisfy bic?."
   ([s]
-     {:pre (bic? s)}
+     {:pre [(bic? s)]}
      s)
   ([institution-code country-code location-code]
      (bic institution-code country-code location-code nil))

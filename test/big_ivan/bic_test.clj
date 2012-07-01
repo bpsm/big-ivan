@@ -44,3 +44,14 @@
   (is (= "DEUTDEFF" (bic "DEUT" "DE" "FF" nil)))
   (is (= "DEUTDEFF" (bic "DEUT" "DE" "FF" "")))
   (is (= "DEUTDEFF" (bic "DEUT" "DE" "FF"))))
+
+(deftest bic?-versus-bic
+  (testing "bic is strict"
+    (is (thrown? AssertionError (bic "DEU" "DE" "FF")))
+    (is (thrown? AssertionError (bic "DEU9DEFF"))))
+  (testing "bic? returns nil or is identity"
+    (is (nil? (bic? nil)))
+    (is (nil? (bic? "NOT-A-BIC")))
+    (is (nil? (bic? false)))
+    (let [x "DEUTDEFF"]
+      (is (identical? x (bic? x))))))
