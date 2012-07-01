@@ -45,7 +45,7 @@ This provides the IBAN standard's 'printed' representation.</pre></div><a href="
 Docstring:
 ==========
 
-  Return the BBAN portion of iban. iban must be valid.</pre></div><a href="#top">Back to top</a> <a href="https://github.com/bpsm/big-ivan/blob/master/src/big_ivan/iban.clj#L60">View Source</a></div><div id="IDcountry-code"><div><h3>Function: country-code</h3><pre>Arglists:
+  Return the BBAN portion of iban. iban must be valid.</pre></div><a href="#top">Back to top</a> <a href="https://github.com/bpsm/big-ivan/blob/master/src/big_ivan/iban.clj#L59">View Source</a></div><div id="IDcountry-code"><div><h3>Function: country-code</h3><pre>Arglists:
 =========
 
   (country-code iban)
@@ -53,7 +53,7 @@ Docstring:
 Docstring:
 ==========
 
-  Return the country code of iban. iban must be valid.</pre></div><a href="#top">Back to top</a> <a href="https://github.com/bpsm/big-ivan/blob/master/src/big_ivan/iban.clj#L52">View Source</a></div><div id="IDiban"><div><h3>Function: iban</h3><pre>Arglists:
+  Return the country code of iban. iban must be valid.</pre></div><a href="#top">Back to top</a> <a href="https://github.com/bpsm/big-ivan/blob/master/src/big_ivan/iban.clj#L51">View Source</a></div><div id="IDiban"><div><h3>Function: iban</h3><pre>Arglists:
 =========
 
   (iban s)
@@ -64,7 +64,8 @@ Docstring:
 
   Construct an iban from a single string or from a country code and a bban.
 
-In the singal argument case, s must satisfy iban?.</pre></div><a href="#top">Back to top</a> <a href="https://github.com/bpsm/big-ivan/blob/master/src/big_ivan/iban.clj#L37">View Source</a></div><div id="IDibanQMARK"><div><h3>Function: iban?</h3><pre>Arglists:
+In the singal argument case, s must satisfy iban? after any spaces have been
+removed.</pre></div><a href="#top">Back to top</a> <a href="https://github.com/bpsm/big-ivan/blob/master/src/big_ivan/iban.clj#L37">View Source</a></div><div id="IDibanQMARK"><div><h3>Function: iban?</h3><pre>Arglists:
 =========
 
   (iban? s)
