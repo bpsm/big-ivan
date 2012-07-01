@@ -37,13 +37,12 @@ This provides the IBAN standard's 'printed' representation."
 (defn iban
   "Construct an iban from a single string or from a country code and a bban.
 
-In the singal argument case, s must satisfy iban?."
+In the singal argument case, s must satisfy iban? after any spaces have been
+removed."
   ([s]
      {:pre [(string? s)]
       :post [(iban? %)]}
-     (let [s* (remove-spaces s)]
-       (assert (iban? s*))
-       s*))
+     (remove-spaces s))
   ([country-code bban]
      {:post [(iban? %)]}
      (check/set-check (str country-code "00" bban))))

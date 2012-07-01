@@ -120,3 +120,18 @@
   (testing "can construct out of components"
     (doseq [x (map iban valid-iban-examples)]
       (is (= x (iban (country-code x) (bban x)))))))
+
+(deftest iban?-versus-iban
+  (testing "iban is strict"
+    (is (thrown? AssertionError (iban "XYZZY")))
+    (is (thrown? AssertionError (iban false)))
+    (testing "but will tolerate extra spaces (printed presentation)"
+      (is (= "NO9386011117947" (iban "NO93 8601 1117 947")))))
+  (testing "iban? returns nil or is identity"
+    (is (nil? (iban? nil)))
+    (is (nil? (iban? false)))
+    (testing "plausible iban contains no spaces"
+      (is (nil? (iban? "NO93 8601 1117 947")))
+      (is (= "NO9386011117947" (iban? "NO9386011117947"))))
+    (let [x "NO9386011117947"]
+      (is (identical? x (iban? x))))))
