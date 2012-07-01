@@ -1,8 +1,12 @@
 <!-- -*- mode: markdown ; coding: utf-8 -*- -->
 
-# big-ivan
+# Big Ivan
 
-A library for validating, parsing and constructing BIC and IBAN values.
+Big Ivan teaches Clojure how to parse, validate and construct BIC and IBAN strings.
+
+Releases are [hosted on clojars.org](https://clojars.org/org.clojars.bpsm/big-ivan).
+
+[API documention](http://bpsm.github.com/big-ivan/index.html) is available.
 
 ## Usage
 
@@ -43,7 +47,6 @@ A few examples:
     => "SA03 8000 0000 6080 1016 7519"
 
 See also [docs for `big-ivan.iban`](http://bpsm.github.com/big-ivan/big-ivan.iban.html).
-
 
 ## License
 
