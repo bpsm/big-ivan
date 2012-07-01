@@ -4,7 +4,6 @@
 (ns big-ivan.bic
   "Functions which validate, parse and construct BIC strings.")
 
-(def ^:private bic-re #"[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?")
 
 (defn bic?
   "Determine if s is syntactically a valid BIC, returning s or nil.
@@ -12,7 +11,8 @@
 A BIC is a string that begins with 6 uppercase ascii letters, followed
 by 2 or 5 uppercase letters or digits."
   [s]
-  (when (and  (string? s) (re-matches bic-re s))
+  (when (and  (string? s)
+              (re-matches #"[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?" s))
     s))
 
 
