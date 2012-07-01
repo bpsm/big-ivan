@@ -2,7 +2,8 @@
 ;;; (c) 2012 Ben Smith-Mannschott -- Distributed under the Eclipse Public License
 
 (ns big-ivan.iban.check
-    (:require [clojure.string :as string]))
+  "implements the ISO-13616 IBAN check digit algorithm"
+  (:require [clojure.string :as string]))
 
 (def letter->digits
   "Translate the letters A-Z, a-z to integers 10-36 case insensitively.

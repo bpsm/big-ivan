@@ -2,6 +2,7 @@
 ;;; (c) 2012 Ben Smith-Mannschott -- Distributed under the Eclipse Public License
 
 (ns big-ivan.iban
+  "Functions which validate, parse and construct IBAN strings."
   (:require (clojure [string :as string])
             (big-ivan.iban [check :as check]
                            [registry :as registry])))

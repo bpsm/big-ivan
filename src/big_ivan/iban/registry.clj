@@ -2,6 +2,7 @@
 ;;; (c) 2012 Ben Smith-Mannschott -- Distributed under the Eclipse Public License
 
 (ns big-ivan.iban.registry
+  "IBAN registry describing country-specific IBAN formats."
   (:require [clojure.string :as string]))
 
 (def bban-format-map
