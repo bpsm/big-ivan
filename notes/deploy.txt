@@ -1,0 +1,11 @@
+
+Deployment
+----------
+
+"lein deploy clojars" doesn't appear to work. gpg pukes and dies: as
+obtuse and opaque as ever. Thankfully deploying by hand is no hardship:
+
+lein clean
+lein jar
+lein pom
+scp pom.xml target/big-ivan-*.*.*.jar clojars@clojars.org:
