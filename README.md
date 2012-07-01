@@ -26,8 +26,7 @@ A few examples:
     (bic/bic "$$$$" "DE" "FF" "007")
     => throws AssertionError
 
-See docstrings in `big-ivan.bic` or examples in `big-ivan.bic-test`
-for more information.
+See also [docs for `big-ivan.bic`](http://bpsm.github.com/big-ivan/big-ivan.bic.html).
 
 ### IBAN
 
@@ -43,8 +42,8 @@ A few examples:
     (iban/add-spaces "SA0380000000608010167519") 
     => "SA03 8000 0000 6080 1016 7519"
 
-See docstrings in `big-ivan.iban` or examples in `big-ivan.iban-test`
-for more information.
+See also [docs for `big-ivan.iban`](http://bpsm.github.com/big-ivan/big-ivan.iban.html).
+
 
 ## License
 
