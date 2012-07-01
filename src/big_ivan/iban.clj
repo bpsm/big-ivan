@@ -30,8 +30,6 @@ This provides the IBAN standard's 'printed' representation."
   [iban]
   (string/replace (remove-spaces iban) #"[^ ]{4}(?!$)" #(str % \space)))
 
-(defn country-code? [s]
-  (and (string? s) (re-matches #"[A-Z]{2}" s)))
 
 (defn iban
   "Construct an iban from a single string or from a country code and a bban.
@@ -51,7 +49,7 @@ In the singal argument case, s must satisfy iban?."
   "Return the country code of iban. iban must be valid."
   [^String iban]
   {:pre [(iban? iban)]
-   :post [(country-code? %)]}
+   :post [(re-matches #"[A-Z]{2}" %)]}
   (.substring iban 0 2))
 
 (defn bban
